@@ -37,11 +37,15 @@ class Task(db.Model):
     status = db.Column(Enum(Status), nullable=False, default=Status.UPLOADED)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+class EnumField(fields.Field):
+    def _serialize(self, value, attr, obj, **kwargs):
+        return value.value.upper()
+
 class TaskSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Task
         include_relationships = True
         load_instance = True
 
-    extension = fields.String()
-    status = fields.String()
+    extension = EnumField()
+    status = EnumField()
