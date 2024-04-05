@@ -1,7 +1,16 @@
+import os
+from env import UPLOADED_FOLDER
 from flask_restful import Resource
 from flask import request
 from modelos import User, db
-from werkzeug.security import generate_password_hash
+from datetime import timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+
+from modelos.modelos import Extension, Status, Task, TaskSchema
+from tareas.tareas import process_video
+
+task_schema = TaskSchema()
 
 class VistaSignUp(Resource):
 
@@ -12,7 +21,7 @@ class VistaSignUp(Resource):
         email = request.json['email']
 
         if not username or not password1 or not password2 or not email:
-            return {'message': 'All fields must be filled'}, 400
+            return {'message': 'Todos los campos deben ser enviados (username, password1, password2 y email)'}, 400
 
         user = User.query.filter((User.username == username) | (User.email == email)).first()
 
@@ -22,8 +31,62 @@ class VistaSignUp(Resource):
                 user = User(username=username, password=encrypted_password, email=email)
                 db.session.add(user)
                 db.session.commit()
-                return {'message': 'User created successfully'}, 201
+                return {'message': 'Usuario creado exitosamente'}, 201
             else:
-                return {'message': 'Passwords do not match'}, 400
+                return {'message': 'Las contrasenias no coinciden'}, 400
         else:
-            return {'message': 'User already exists'}, 409
+            return {'message': 'El usuario con ese tipo de nombre de usuario y email ya existe, intenta con otro'}, 409
+
+class VistaLogin(Resource):
+
+    def post(self):
+        username = request.json["username"]
+        password = request.json["password"]
+
+        if not username or not password:
+            return {'message': 'Todos los campos deben ser enviados (username y password)'}, 400
+
+        user = User.query.filter(User.username == username).first()
+
+        if user is not None:
+            verification_password = check_password_hash(user.password, password)
+            if not verification_password:
+                return {'message': 'Contrasenia invalidad, intenta nuevamente'}, 400
+            else:
+                try:
+                    token = create_access_token(identity=username, expires_delta = timedelta(days = 1))
+                    return {'message': 'Inicio de sesion exitoso', 'token': token}, 200
+                except:
+                    return {'message': 'Inicio de sesion fallido'}, 500
+        else:
+            return {'message': 'Usuario no encontrado en el sistema'}, 404
+
+class VistaTask(Resource):
+
+    @jwt_required()
+    def post(self):
+        file = request.files['filename']
+
+        if not file:
+            return {'message': 'El campo filename es requerido'}, 400
+
+        filename = file.filename
+        file_split = file.filename.split('.')
+        file_extension = file_split[1]
+
+        if file_extension not in ['mp4', 'mov', 'wmv', 'avi']:
+            return {'message': 'El archivo no tiene una extension valida para su procesamiento'}, 400
+
+        file_path = os.path.join(UPLOADED_FOLDER, filename)
+        file.save(file_path)
+
+        username = get_jwt_identity()
+        user = User.query.filter(User.username == username).first()
+
+        task = Task(filename=filename, extension=file_extension.upper(), status=Status.UPLOADED, user_id=user.id)
+        db.session.add(task)
+        db.session.commit()
+
+        process_video.apply_async((task.id,), countdown=10)
+
+        return task_schema.dump(task), 200

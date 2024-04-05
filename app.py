@@ -1,23 +1,16 @@
-from flask import Flask
-from env import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB
+from celery import Celery
+from config import app
 from flask_restful import Api
 
-from modelos.modelos import db
-from vistas.vistas import VistaSignUp
+from vistas.vistas import VistaLogin, VistaSignUp, VistaTask
 
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PROPAGATE_EXCEPTIONS'] = True
-
-app_context = app.app_context()
-app_context.push()
-
-db.init_app(app)
-db.create_all()
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
 
 api = Api(app)
 api.add_resource(VistaSignUp, '/api/auth/signup')
+api.add_resource(VistaLogin, '/api/auth/login')
+api.add_resource(VistaTask, '/api/tasks')
+
 if __name__ == '__main__':
     app.run()
