@@ -10,9 +10,9 @@ from config import app
 celery = Celery(CELERY_TASK_NAME, broker=CELERY_BROKER_URL)
 app.app_context().push()
 
+# Task - Procesamiento de video: Se encarga de procesar el video subido por el usuario, recortando el video a 20 segundos, ajustando la relación de aspecto a 16:9, añadiendo un logo al inicio y al final del video y guardando el video procesado en la carpeta videos/procesados.
 @celery.task()
 def process_video(task_id):
-    print(task_id)
     task = Task.query.get(task_id)
 
     if task is None:

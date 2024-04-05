@@ -14,6 +14,7 @@ task_schema = TaskSchema()
 
 class VistaSignUp(Resource):
 
+    # POST - Permite crear una cuenta con los campos para nombre de usuario, correo electrónico y contraseña.
     def post(self):
         username = request.json["username"]
         password1 = request.json['password1']
@@ -39,6 +40,7 @@ class VistaSignUp(Resource):
 
 class VistaLogin(Resource):
 
+    # POST - Permite iniciar sesión con los campos de nombre de usuario y contraseña.
     def post(self):
         username = request.json["username"]
         password = request.json["password"]
@@ -63,6 +65,7 @@ class VistaLogin(Resource):
 
 class VistaTask(Resource):
 
+    # POST - Permite crear una nueva tarea de edición de video. El usuario requiere autorización.
     @jwt_required()
     def post(self):
         file = request.files['filename']
