@@ -16,3 +16,5 @@ redis==3.5.3
 celery==5.2.3
 moviepy==1.0.3
 pillow==10.2.0
+tzdata
+psycopg2==2.9.3
