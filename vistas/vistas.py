@@ -120,7 +120,7 @@ class VistaTask(Resource):
             db.session.delete(task)
             db.session.commit()
 
-            return 204
+            return '',204
         
         except Exception as e:
             # If any error occurs during file deletion or database operation
