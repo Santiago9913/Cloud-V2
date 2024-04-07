@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "382cd389-165b-46e0-a03c-2f3a189dfd50",
+		"_postman_id": "e1b49870-a57a-48fa-8a99-ed10cee2a9a4",
 		"name": "IDRL",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21689315"
+		"_exporter_id": "12859908"
 	},
 	"item": [
 		{
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"JulianP911\",\n    \"password\": \"123456\"\n}",
+					"raw": "{\n    \"username\": \"JulianP911\",\n    \"email\": \"juli@1232.com\",\n    \"password1\": \"123456\",\n    \"password2\": \"123456\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/auth/login",
+					"raw": "http://127.0.0.1:5000/api/auth/signup",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -39,7 +39,7 @@
 					"path": [
 						"api",
 						"auth",
-						"login"
+						"signup"
 					],
 					"query": [
 						{
@@ -100,6 +100,49 @@
 		},
 		{
 			"name": "Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjI2MzM3OSwianRpIjoiOThiYTQ4NGItN2MzMy00MTVlLWJkOWMtYzA4ZDRiNmNjMzg0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTIyNjMzNzksImNzcmYiOiJlY2JkM2EzNC1mODg1LTQxZmMtODVhMS0xY2QxODczNTFlODkiLCJleHAiOjE3MTIzNDk3Nzl9.BnhxqshSWOgp0FGTgOAzNZyWojthiQw75baTgXgN2_w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "filename",
+							"type": "file",
+							"src": "/Users/julianpadilla/Downloads/Ejemplo.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete task",
 			"request": {
 				"auth": {
 					"type": "bearer",

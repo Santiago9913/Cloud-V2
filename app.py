@@ -10,7 +10,7 @@ celery.conf.update(app.config)
 api = Api(app)
 api.add_resource(VistaSignUp, '/api/auth/signup')
 api.add_resource(VistaLogin, '/api/auth/login')
-api.add_resource(VistaTask, '/api/tasks')
+api.add_resource(VistaTask, '/api/tasks', '/api/tasks/<int:task_id>')
 
 if __name__ == '__main__':
     app.run()

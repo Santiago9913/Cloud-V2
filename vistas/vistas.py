@@ -1,5 +1,5 @@
 import os
-from env import UPLOADED_FOLDER
+from env import PROCESSED_FOLDER, UPLOADED_FOLDER
 from flask_restful import Resource
 from flask import request
 from modelos import User, db
@@ -93,3 +93,36 @@ class VistaTask(Resource):
         process_video.apply_async((task.id,), countdown=10)
 
         return task_schema.dump(task), 200
+    
+    # DELETE - Permite eliminar una tarea en la aplicación. El usuario requiere autorización.
+    @jwt_required()
+    def delete(self, task_id):
+        username = get_jwt_identity()
+        task = Task.query.get(task_id)
+        user = User.query.filter(User.username == username).first()
+
+        if task is None:
+            return {'message':'El archivo no existe'}, 404
+        
+        if task.status != Status.PROCESSED:
+            return {'message':'El archivo no ha sido procesado'}, 400
+        
+        if task.user_id != user.id:
+            return {'message':'El usuario no es propietario del archivo'}, 400
+        try:
+            # Eliminar archivos del sistema
+            file_path = os.path.join(UPLOADED_FOLDER, task.filename)
+            os.remove(file_path)
+            file_path = os.path.join(PROCESSED_FOLDER, task.filename)
+            os.remove(file_path)
+            
+            # Eliminarlo de la DB
+            db.session.delete(task)
+            db.session.commit()
+
+            return 204
+        
+        except Exception as e:
+            # If any error occurs during file deletion or database operation
+            db.session.rollback()
+            return {'message': 'Error al eliminar el archivo: {}'.format(str(e))}, 500
