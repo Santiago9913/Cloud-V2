@@ -126,3 +126,28 @@ class VistaTask(Resource):
             # If any error occurs during file deletion or database operation
             db.session.rollback()
             return {'message': 'Error al eliminar el archivo: {}'.format(str(e))}, 500
+
+    # GET - Lista las tareas de un usuario.
+    @jwt_required()
+    def get(self):
+        username = get_jwt_identity()
+        user = User.query.filter(User.username == username).first()
+
+        if user is None:
+            return {'message': 'Usuario no encontrado en el sistema'}, 404
+
+        tasks = Task.query.filter(Task.user_id == user.id).all()
+
+        if not tasks:
+            return {'message': 'No hay tareas de edición para este usuario'}, 404
+
+        task_list = []
+        for task in tasks:
+            task_info = {
+                'task_id': task.id,
+                'original_filename': task.filename,
+                'status': task.status
+            }
+            task_list.append(task_info)
+
+        return {'tasks': task_list}, 200
