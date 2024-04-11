@@ -1,7 +1,7 @@
 import os
 from env import PROCESSED_FOLDER, UPLOADED_FOLDER
 from flask_restful import Resource
-from flask import request
+from flask import request, send_file
 from modelos import User, db
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -93,7 +93,7 @@ class VistaTask(Resource):
         process_video.apply_async((task.id,), countdown=10)
 
         return task_schema.dump(task), 200
-    
+
     # DELETE - Permite eliminar una tarea en la aplicación. El usuario requiere autorización.
     @jwt_required()
     def delete(self, task_id):
@@ -103,10 +103,10 @@ class VistaTask(Resource):
 
         if task is None:
             return {'message':'El archivo no existe'}, 404
-        
+
         if task.status != Status.PROCESSED:
             return {'message':'El archivo no ha sido procesado'}, 400
-        
+
         if task.user_id != user.id:
             return {'message':'El usuario no es propietario del archivo'}, 400
         try:
@@ -115,13 +115,13 @@ class VistaTask(Resource):
             os.remove(file_path)
             file_path = os.path.join(PROCESSED_FOLDER, task.filename)
             os.remove(file_path)
-            
+
             # Eliminarlo de la DB
             db.session.delete(task)
             db.session.commit()
 
-            return '',204
-        
+            return '' ,204
+
         except Exception as e:
             # If any error occurs during file deletion or database operation
             db.session.rollback()
@@ -144,10 +144,57 @@ class VistaTask(Resource):
         task_list = []
         for task in tasks:
             task_info = {
-                'task_id': task.id,
-                'original_filename': task.filename,
+                'id': task.id,
+                'filename': task.filename,
                 'status': task.status
             }
-            task_list.append(task_info)
+            task_list.append(task_schema.dump(task_info))
 
         return {'tasks': task_list}, 200
+
+    # GET - Permite obtener información de una tarea específica.
+    @jwt_required()
+    def get(self, task_id):
+        username = get_jwt_identity()
+        user = User.query.filter(User.username == username).first()
+
+        if user is None:
+            return {'message': 'Usuario no encontrado en el sistema'}, 404
+
+        task = Task.query.get(task_id)
+
+        if task is None:
+            return {'message':'El archivo no existe'}, 404
+        if task.user_id != user.id:
+            return {'message':'El usuario no es propietario del archivo'}, 400
+
+        task_info = task_schema.dump(task)
+        if task.status == Status.PROCESSED:
+            task_info['path'] = PROCESSED_FOLDER + '/' + task.filename
+            task_info['url'] = 'http://127.0.0.1:8080/api/tasks/{}/download'.format(task.id)
+
+        return task_info, 200
+
+class VistaDownloadTask(Resource):
+
+    # GET - Permite descargar un archivo procesado.
+    @jwt_required()
+    def get(self, task_id):
+        username = get_jwt_identity()
+        user = User.query.filter(User.username == username).first()
+
+        if user is None:
+            return {'message': 'Usuario no encontrado en el sistema'}, 404
+
+        task = Task.query.get(task_id)
+
+        if task is None:
+            return {'message':'El archivo no existe'}, 404
+        if task.user_id != user.id:
+            return {'message':'El usuario no es propietario del archivo'}, 400
+
+        if task.status == Status.PROCESSED:
+            return send_file(PROCESSED_FOLDER + '/' + task.filename, as_attachment=True)
+
+        return {'message':'El archivo no ha sido procesado por lo cual no se puede descargar'}, 400
+

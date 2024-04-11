@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7d57306f-8ca5-4be9-bb9c-72d29175f0ef",
+		"_postman_id": "a265473e-afab-4317-b253-3e43709270e4",
 		"name": "IDRL",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "7504175"
+		"_exporter_id": "21689315"
 	},
 	"item": [
 		{
@@ -106,7 +106,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjI2MzM3OSwianRpIjoiOThiYTQ4NGItN2MzMy00MTVlLWJkOWMtYzA4ZDRiNmNjMzg0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTIyNjMzNzksImNzcmYiOiJlY2JkM2EzNC1mODg1LTQxZmMtODVhMS0xY2QxODczNTFlODkiLCJleHAiOjE3MTIzNDk3Nzl9.BnhxqshSWOgp0FGTgOAzNZyWojthiQw75baTgXgN2_w",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjc5NjY5MCwianRpIjoiZjE4YmY1NWUtNzU3ZS00ZGFiLThiMDktOTBmZTcxODA0ZGZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTI3OTY2OTAsImNzcmYiOiJhYjYxOGVlZC01ZTBjLTQxM2YtYTcxNy1mYTU4OTcwMTc0OGIiLCJleHAiOjE3MTI4ODMwOTB9.E7TEJgaBpDoeAMvLHS4AvNrlXerZDuhwa6CqeXwD1so",
 							"type": "string"
 						}
 					]
@@ -149,25 +149,15 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjI2MzM3OSwianRpIjoiOThiYTQ4NGItN2MzMy00MTVlLWJkOWMtYzA4ZDRiNmNjMzg0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTIyNjMzNzksImNzcmYiOiJlY2JkM2EzNC1mODg1LTQxZmMtODVhMS0xY2QxODczNTFlODkiLCJleHAiOjE3MTIzNDk3Nzl9.BnhxqshSWOgp0FGTgOAzNZyWojthiQw75baTgXgN2_w",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjc5NjY5MCwianRpIjoiZjE4YmY1NWUtNzU3ZS00ZGFiLThiMDktOTBmZTcxODA0ZGZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTI3OTY2OTAsImNzcmYiOiJhYjYxOGVlZC01ZTBjLTQxM2YtYTcxNy1mYTU4OTcwMTc0OGIiLCJleHAiOjE3MTI4ODMwOTB9.E7TEJgaBpDoeAMvLHS4AvNrlXerZDuhwa6CqeXwD1so",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "filename",
-							"type": "file",
-							"src": "/Users/julianpadilla/Downloads/Ejemplo.mp4"
-						}
-					]
-				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/tasks",
+					"raw": "http://127.0.0.1:5000/api/tasks/64",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -178,14 +168,15 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"tasks"
+						"tasks",
+						"64"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "get tasks",
+			"name": "Get tasks",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -195,7 +186,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjI2MzM3OSwianRpIjoiOThiYTQ4NGItN2MzMy00MTVlLWJkOWMtYzA4ZDRiNmNjMzg0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTIyNjMzNzksImNzcmYiOiJlY2JkM2EzNC1mODg1LTQxZmMtODVhMS0xY2QxODczNTFlODkiLCJleHAiOjE3MTIzNDk3Nzl9.BnhxqshSWOgp0FGTgOAzNZyWojthiQw75baTgXgN2_w",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjc5NjY5MCwianRpIjoiZjE4YmY1NWUtNzU3ZS00ZGFiLThiMDktOTBmZTcxODA0ZGZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTI3OTY2OTAsImNzcmYiOiJhYjYxOGVlZC01ZTBjLTQxM2YtYTcxNy1mYTU4OTcwMTc0OGIiLCJleHAiOjE3MTI4ODMwOTB9.E7TEJgaBpDoeAMvLHS4AvNrlXerZDuhwa6CqeXwD1so",
 							"type": "string"
 						}
 					]
@@ -219,6 +210,82 @@
 					"path": [
 						"api",
 						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get task",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjc5NjY5MCwianRpIjoiZjE4YmY1NWUtNzU3ZS00ZGFiLThiMDktOTBmZTcxODA0ZGZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTI3OTY2OTAsImNzcmYiOiJhYjYxOGVlZC01ZTBjLTQxM2YtYTcxNy1mYTU4OTcwMTc0OGIiLCJleHAiOjE3MTI4ODMwOTB9.E7TEJgaBpDoeAMvLHS4AvNrlXerZDuhwa6CqeXwD1so",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/tasks/64",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tasks",
+						"64"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjc5NjY5MCwianRpIjoiZjE4YmY1NWUtNzU3ZS00ZGFiLThiMDktOTBmZTcxODA0ZGZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikp1bGlhblA5MTEiLCJuYmYiOjE3MTI3OTY2OTAsImNzcmYiOiJhYjYxOGVlZC01ZTBjLTQxM2YtYTcxNy1mYTU4OTcwMTc0OGIiLCJleHAiOjE3MTI4ODMwOTB9.E7TEJgaBpDoeAMvLHS4AvNrlXerZDuhwa6CqeXwD1so",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/tasks/64/download",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tasks",
+						"64",
+						"download"
 					]
 				}
 			},
