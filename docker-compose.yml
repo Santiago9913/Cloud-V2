@@ -40,7 +40,7 @@ services:
       - custom_network
 
   flask:
-    image: santiago9913/flask:v1
+    image: santiago9913/flask:latest
     restart: always
     command: sh -c "nohup flask run --host=0.0.0.0 > log.txt 2>&1 & celery --app tareas.tareas.celery worker --loglevel=info"
     ports:
