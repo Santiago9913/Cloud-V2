@@ -1,7 +1,7 @@
 on: [push]
 permissions: write-all
 jobs:
-  publish-docker-img:
+  publish-docker-img-amd:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,5 +15,17 @@ jobs:
         run: |
           docker build -t santiago9913/flask:latest-amd --platform linux/amd64 .
           docker push santiago9913/flask:latest-amd
+  publish-docker-img-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push Docker image
+        run: |
           docker build -t santiago9913/flask:latest-arm --platform linux/arm64/v8 .
           docker push santiago9913/flask:latest-arm
