@@ -9,8 +9,6 @@ jobs:
       - name: Install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v3
-        with:
-          version: latest
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
         with:
@@ -18,5 +16,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker image
         run: |
-          docker buildx build -t santiago9913/flask:latest --platform linux/amd64 linux/arm/v8 linux/arm64 .
-          docker push santiago9913/flask:latest
+          docker buildx build --push --tag santiago9913/flask:latest --platform linux/amd64 linux/arm/v8 linux/arm64 .
