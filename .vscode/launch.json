@@ -5,17 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python Debugger: Flask",
+      "name": "Python Debugger: FastAPI",
       "type": "debugpy",
       "request": "launch",
-      "module": "flask",
-      "env": {
-        "FLASK_APP": "app.py",
-        "FLASK_DEBUG": "1"
-      },
-      "args": ["run", "--no-debugger", "--no-reload"],
+      "module": "uvicorn",
+      "args": ["main:app", "--reload"],
       "jinja": true,
-      "autoStartBrowser": false
+      "cwd": "${workspaceFolder}/app"
     }
   ]
 }
