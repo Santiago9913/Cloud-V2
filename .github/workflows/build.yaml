@@ -1,0 +1,26 @@
+name: Build Image
+
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to GCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: { { github.actor } }
+          password: { { secrets.GITHUB_TOKEN } }
+      - name: Install buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v3
+      - name: Build and push Docker image
+        run: |
+          docker buildx build --push \
+          --tag ghcr.io/santiago9913/cloud:latest \
+          --platform linux/amd64,linux/arm64 .
