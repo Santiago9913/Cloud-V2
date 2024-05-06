@@ -12,6 +12,9 @@ from routers.auth import router as auth_router
 from routers.tasks import router as tasks_router
 from routers.users import router as users_router
 
+import uvicorn
+import os
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,3 +38,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(tasks_router)
 app.include_router(users_router)
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True, port=int(os.environ.get("PORT", 8000)))
