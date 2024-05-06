@@ -9,3 +9,5 @@ passlib[bcrypt]
 pydantic[email]
 google-cloud-storage
 google-cloud-pubsub
+pytest
+httpx
