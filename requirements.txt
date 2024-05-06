@@ -11,3 +11,4 @@ google-cloud-storage
 google-cloud-pubsub
 pytest
 httpx
+trio
