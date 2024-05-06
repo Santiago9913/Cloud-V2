@@ -40,7 +40,7 @@ async def signUp(*, session: Session = Depends(get_session), dto: SignUpDto):
             password=get_password_hash(dto.password),
         )
         await createUser(session=session, user=user)
-        return user
+        return user.model_dump(exclude={"password"})
     else:
         raise HTTPException(status_code=400, detail="User already exists")
 

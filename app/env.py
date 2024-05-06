@@ -18,3 +18,6 @@ CELERY_TASK_NAME = os.getenv("CELERY_TASK_NAME", default="process_video")
 
 
 ENV = os.getenv("ENV", default="development")
+
+
+BUCKET_NAME = os.getenv("BUCKET_NAME", default="videos_dev_cloud")
