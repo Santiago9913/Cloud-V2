@@ -30,10 +30,7 @@ jobs:
           --build-arg POSTGRES_PORT=${{secrets.POSTGRES_PORT}} \
           --platform linux/amd64,linux/arm64 .
   deploy:
-    permissions:
-      content: "read"
-      id-token: "write"
-    depends-on: build-image
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
       - uses: "actions/checkout@v4"
