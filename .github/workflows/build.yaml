@@ -29,3 +29,20 @@ jobs:
           --build-arg POSTGRES_HOST=${{secrets.POSTGRES_HOST}} \
           --build-arg POSTGRES_PORT=${{secrets.POSTGRES_PORT}} \
           --platform linux/amd64,linux/arm64 .
+  deploy:
+    permissions:
+      content: "read"
+      id-token: "write"
+    depends-on: build-image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v4"
+      - uses: "google-github-actions/auth@v2"
+        with:
+          service_account: ${{secrets.GCP_SA_EMAIL}}
+          token_formt: "access_token"
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          image: ghcr.io/santiago9913/cloud:latest
+          region: us-central1
+          service: cloud
