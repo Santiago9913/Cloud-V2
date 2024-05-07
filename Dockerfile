@@ -22,7 +22,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV GOOGLE_APPLICATION_CREDENTIALS="/cloud/cloud-dev-421516-a73c9ed72f6b.json"
+ENV GOOGLE_APPLICATION_CREDENTIALS="./cloud-dev-421516-a73c9ed72f6b.json"
 
 CMD [ "python", "app/main.py"]
 
