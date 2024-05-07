@@ -4,3 +4,4 @@ cloud_data
 */*.DS_Store
 cloud-dev-*.*
 *.db
+docker-compose.*
