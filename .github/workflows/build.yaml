@@ -26,10 +26,6 @@ jobs:
           registry: ${{secrets.GCP_REGISTRY}}
           username: oauth2accesstoken
           password: ${{steps.auth.outputs.access_token}}
-      - name: Move credentials
-        run: |
-          touch ./credentials.json
-          echo ${{env.GOOGLE_APPLICATION_CREDENTIALS}} > ./credentials.json
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -41,7 +37,6 @@ jobs:
             "POSTGRES_DB=${{secrets.POSTGRES_DB}}"
             "POSTGRES_HOST=${{secrets.POSTGRES_HOST}}"
             "POSTGRES_PORT=${{secrets.POSTGRES_PORT}}"
-            "GOOGLE_APPLICATION_CREDENTIALS=${{env.GOOGLE_APPLICATION_CREDENTIALS}}"
           tags: |
             ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
 
@@ -55,8 +50,14 @@ jobs:
         with:
           credentials_json: ${{secrets.GCP_SERVICE_ACCOUNT}}
           token_format: "access_token"
+      - name: Move credentials
+        run: |
+          touch ./credentials.json
+          echo ${{env.GOOGLE_APPLICATION_CREDENTIALS}} > ./credentials.json
       - uses: google-github-actions/deploy-cloudrun@v2
         with:
           image: ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
           region: us-central1
+          secrets: |-
+            /cloud=${{env.GOOGLE_APPLICATION_CREDENTIALS}}
           service: cloud
