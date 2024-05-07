@@ -28,7 +28,7 @@ jobs:
           password: ${{steps.auth.outputs.access_token}}
       - name: Move credentials
         run: |
-          cp ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} ./credentials.json
+          cp ${{env.GOOGLE_APPLICATION_CREDENTIALS}} ./credentials.json
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
