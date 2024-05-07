@@ -25,7 +25,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
+ADD $GOOGLE_APPLICATION_CREDENTIALS credentials.json
 
 CMD [ "python", "app/main.py"]
 

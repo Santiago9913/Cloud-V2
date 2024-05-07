@@ -3,7 +3,7 @@ from env import BUCKET_NAME
 import os
 from io import BytesIO
 
-credentials_path = './cloud-dev-421516-a73c9ed72f6b.json'
+credentials_path = "../../credentials.json"
 
 
 storage_client = None

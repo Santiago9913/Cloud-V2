@@ -2,7 +2,7 @@ from google.cloud import pubsub_v1
 import json
 import os
 
-credentials_path = "./cloud-dev-421516-a73c9ed72f6b.json"
+credentials_path = "../../credentials.json"
 
 
 def publish_message(data):
