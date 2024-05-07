@@ -58,6 +58,4 @@ jobs:
         with:
           image: ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
           region: us-central1
-          secrets: |-
-            /cloud=${{env.GOOGLE_APPLICATION_CREDENTIALS}}
           service: cloud

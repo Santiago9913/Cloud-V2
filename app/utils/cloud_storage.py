@@ -3,15 +3,15 @@ from env import BUCKET_NAME
 import os
 from io import BytesIO
 
-credentials_path = "../../credentials.json"
+# credentials_path = "../../credentials.json"
 
 
 storage_client = None
 
 
 def init_cludstorage():
-    if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") is None:
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+    # if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") is None:
+    #     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
     global storage_client
     storage_client = storage.Client()
 
