@@ -44,6 +44,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: "actions/checkout@v4"
+      - name: Login to GCP
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{secrets.GCP_SERVICE_ACCOUNT}}
+          token_format: "access_token"
       - uses: google-github-actions/deploy-cloudrun@v2
         with:
           image: ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
