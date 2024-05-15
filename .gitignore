@@ -5,3 +5,4 @@ cloud_data
 cloud-dev-*.*
 *.db
 docker-compose.*
+.terraform

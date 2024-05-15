@@ -1,6 +1,6 @@
 from google.cloud import pubsub_v1
 import json
-import os
+from env import TOPIC_NAME
 
 # credentials_path = "../../credentials.json"
 
@@ -11,7 +11,7 @@ def publish_message(data):
     data = json.dumps(data)
     print(data)
     publisher = pubsub_v1.PublisherClient()
-    topic_path = publisher.topic_path("cloud-dev-421516", "process-video")
+    topic_path = publisher.topic_path("cloud-dev-421516", TOPIC_NAME)
     data = data.encode("utf-8")
     print(data)
     future = publisher.publish(topic_path, data)

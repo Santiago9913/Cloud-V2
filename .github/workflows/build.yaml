@@ -37,6 +37,8 @@ jobs:
             "POSTGRES_DB=${{secrets.POSTGRES_DB}}"
             "POSTGRES_HOST=${{secrets.POSTGRES_HOST}}"
             "POSTGRES_PORT=${{secrets.POSTGRES_PORT}}"
+            "TOPIC_NAME"=${{secrets.TOPIC_NAME}}
+            "BUCKET_NAME"=${{secrets.BUCKET_NAME}}
           tags: |
             ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
 
@@ -50,12 +52,10 @@ jobs:
         with:
           credentials_json: ${{secrets.GCP_SERVICE_ACCOUNT}}
           token_format: "access_token"
-      - name: Move credentials
-        run: |
-          touch ./credentials.json
-          echo ${{env.GOOGLE_APPLICATION_CREDENTIALS}} > ./credentials.json
       - uses: google-github-actions/deploy-cloudrun@v2
         with:
           image: ${{secrets.GCP_CONTAINER_URL}}/cloud:latest
+          flags: "--allow-unauthenticated --max-instances=2"
+
           region: us-central1
           service: cloud

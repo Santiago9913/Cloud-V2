@@ -21,3 +21,4 @@ ENV = os.getenv("ENV", default="development")
 
 
 BUCKET_NAME = os.getenv("BUCKET_NAME", default="videos_dev_cloud")
+TOPIC_NAME = os.getenv("TOPIC_NAME", default="process-video")
