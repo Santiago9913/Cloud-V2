@@ -48,8 +48,8 @@ resource "google_cloudfunctions2_function" "worker" {
   location    = "us-central1"
   description = "Worker function to process video from Terraform"
   build_config {
-    runtime               = "python311"
-    entry_point           = "process_video"
+    runtime     = "python311"
+    entry_point = "process_video"
     source {
       storage_source {
         bucket = google_storage_bucket.worker_bucket.name

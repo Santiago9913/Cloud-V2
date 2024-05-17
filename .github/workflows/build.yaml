@@ -2,7 +2,7 @@ name: Build Image
 
 on:
   workflow_run:
-    workflows: ["Tests", "Infra"]
+    workflows: ["Infra"]
     types: [completed]
 
 jobs:

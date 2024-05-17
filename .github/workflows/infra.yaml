@@ -1,6 +1,9 @@
 name: Infra
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
 
 jobs:
   infra:
@@ -20,8 +23,8 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Format
-        run: terraform fmt -check
+      - name: Terraform Validate
+        run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan -input=false
