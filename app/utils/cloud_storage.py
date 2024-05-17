@@ -30,4 +30,5 @@ def upload_blob(blob_name: str, file: BytesIO, userId: str):
         blob.upload_from_file(file)
         return True
     except Exception as e:
+        print(e)
         raise Exception("Error uploading file")
