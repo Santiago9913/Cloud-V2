@@ -42,6 +42,7 @@ async def createTask(
             "message": "File uploaded successfully",
         }
     except Exception as e:
+        print(e)
         return e
     finally:
         file.file.close()
