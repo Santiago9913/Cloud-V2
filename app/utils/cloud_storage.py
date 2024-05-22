@@ -17,9 +17,13 @@ def init_cludstorage():
 
 
 def get_bucket():
-    if not storage_client:
-        raise Exception("Storage client not initialized")
-    return storage_client.get_bucket(BUCKET_NAME)
+    try:
+
+        if not storage_client:
+            raise Exception("Storage client not initialized")
+        return storage_client.get_bucket(BUCKET_NAME)
+    except Exception as e:
+        print(e)
 
 
 def upload_blob(blob_name: str, file: BytesIO, userId: str):
