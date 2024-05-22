@@ -23,6 +23,7 @@ def get_bucket():
         return storage_client.get_bucket("videos_dev_cloud_v2")
     except Exception as e:
         print(e)
+        raise Exception("Error getting bucket")
 
 
 def upload_blob(blob_name: str, file: BytesIO, userId: str):
@@ -35,5 +36,6 @@ def upload_blob(blob_name: str, file: BytesIO, userId: str):
         blob.upload_from_file(file)
         return True
     except Exception as e:
+        print("error uploading file")
         print(e)
         raise Exception("Error uploading file")
