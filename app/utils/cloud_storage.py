@@ -18,10 +18,9 @@ def init_cludstorage():
 
 def get_bucket():
     try:
-
         if not storage_client:
             raise Exception("Storage client not initialized")
-        return storage_client.get_bucket(BUCKET_NAME)
+        return storage_client.get_bucket("videos_dev_cloud_v2")
     except Exception as e:
         print(e)
 
