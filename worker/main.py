@@ -41,7 +41,7 @@ def retrieveVideo(temp, fileName, fileNameInBucket):
 def upload_blob(blob_name: str, file: BytesIO, userId: str):
     try:
         storage_client = storage.Client()
-        bucket = storage_client.bucket("videos_dev_cloud")
+        bucket = storage_client.bucket("videos_dev_cloud_v2")
         blob = bucket.blob(f"processed/{userId}/{blob_name}")
         blob.upload_from_filename(file)
     except Exception as e:
@@ -49,6 +49,8 @@ def upload_blob(blob_name: str, file: BytesIO, userId: str):
         raise Exception("Error uploading file")
 
 
+# Esta funcion solo realiza un corte en el clip
+# Se puede agregar mas funcionalidades segun lo que se busque
 def editVideo(
     fileName,
     blobFile,

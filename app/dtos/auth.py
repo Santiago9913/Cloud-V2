@@ -10,3 +10,7 @@ class SignUpDto(BaseModel):
 class SignInDto(BaseModel):
     email: str
     password: str
+
+
+class RetrieveVideoDto(BaseModel):
+    fileName: str

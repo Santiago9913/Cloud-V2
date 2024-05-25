@@ -2,6 +2,7 @@ from google.cloud import storage
 from env import BUCKET_NAME
 import os
 from io import BytesIO
+import datetime
 
 # credentials_path = "../../credentials.json"
 
@@ -39,3 +40,18 @@ def upload_blob(blob_name: str, file: BytesIO, userId: str):
         print("error uploading file")
         print(e)
         raise Exception("Error uploading file")
+
+
+def get_signed_url(userId: str, fileName: str):
+    try:
+        bucket = get_bucket()
+        blob = bucket.blob(f"processed/{userId}/{fileName}")
+        url = blob.generate_signed_url(
+            version="v4",
+            expiration=datetime.timedelta(minutes=15),
+            method="GET",
+        )
+        return url
+    except Exception as e:
+        print(e)
+        raise Exception("Error generating signed url")
