@@ -3,11 +3,13 @@ from env import BUCKET_NAME
 import os
 from io import BytesIO
 import datetime
+from google.auth import default
 
 # credentials_path = "../../credentials.json"
 
 
 storage_client = None
+credentials, _ = default()
 
 
 def init_cludstorage():
@@ -47,6 +49,7 @@ def get_signed_url(userId: str, fileName: str):
         bucket = get_bucket()
         blob = bucket.blob(f"processed/{userId}/{fileName}")
         url = blob.generate_signed_url(
+            credentials=credentials,
             version="v4",
             expiration=datetime.timedelta(minutes=15),
             method="GET",
