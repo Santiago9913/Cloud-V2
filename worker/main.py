@@ -29,7 +29,7 @@ def process_video(cloud_event):
 def retrieveVideo(temp, fileName, fileNameInBucket):
     try:
         storage_client = storage.Client()
-        bucket = storage_client.bucket("videos_dev_cloud")
+        bucket = storage_client.bucket("videos_dev_cloud_v2")
         blob = bucket.blob(fileNameInBucket)
         blobFile = blob.download_as_bytes()
         editVideo(fileName, blobFile, temp)

@@ -50,12 +50,12 @@ async def getTask(
     *,
     token: Annotated[str, Depends(OAuth2_scheme)],
     session: Session = Depends(get_session),
-    dto: RetrieveVideoDto,
+    fileName: str = "Ejemplo.mp4",
 ):
     try:
         user: User = await getUser(token=token, session=session)
         url = get_signed_url(
-            userId=str(user["id"]), fileName=dto.fileName
+            userId=str(user["id"]), fileName=fileName
         )  # El filename puede pasar por parametro
         return {
             "message": "Task retrieved successfully",
